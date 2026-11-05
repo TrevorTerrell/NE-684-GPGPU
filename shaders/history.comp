@@ -1,0 +1,47 @@
+#version 450
+
+#define ENERGY_MIN 1e-5
+#define ENERGY_MAX 2e7
+
+layout(local_size_x = 256, local_size_y = 1, local_size_z = 1) in;
+
+layout(set = 0, binding = 0, std430) readonly buffer BufferA { float data[]; } a;
+layout(set = 0, binding = 1, std430) readonly buffer BufferB { float data[]; } b;
+layout(set = 0, binding = 2, std430) writeonly buffer BufferC { float data[]; } c;
+
+layout(push_constant) uniform Parameters { uint count; } params;
+
+struct Neutron {
+    double energy;
+    double weight;
+};
+
+struct CrossSections {
+    double U_Fiss;
+    double U_Cap;
+    double U_Scat;
+    double Pu_Fiss;
+    double Pu_Cap;
+    double Pu_Scat;
+    double C_Scat;
+};
+
+CrossSections interpolateCrossSections(Neutron neutron){
+    CrossSections xs = CrossSections;
+    const double logEmax = log(ENERGY_MAX);
+    const double logEmin = log(ENERGY_MIN);
+    const double delta_logE = (logEmax - logEmin) / length(a); // change to XSec table
+
+    const double position = (log(neutron.energy) - logEmin) / delta_logE;
+    const uint index = int(floor(position));
+    const double frac = position - double(index);
+
+    return xs;
+}
+
+void main()
+{
+    uint i = gl_GlobalInvocationID.x;
+    if (i >= params.count) return;
+    c.data[i] = a.data[i] + b.data[i];
+}
