@@ -41,8 +41,8 @@ find_program(GLSLC_EXECUTABLE
     REQUIRED
 )
 
-set(SHADER_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/shaders/add.comp")
-set(SHADER_BINARY "${CMAKE_CURRENT_BINARY_DIR}/add.spv")
+set(SHADER_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/shaders/history.comp")
+set(SHADER_BINARY "${CMAKE_CURRENT_BINARY_DIR}/history.spv")
 
 add_custom_command(
     OUTPUT "${SHADER_BINARY}"
