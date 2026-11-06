@@ -14,7 +14,7 @@ The first thing that you will need is the [Vulkan SDK](https://vulkan.lunarg.com
 
 Configure with CMake in CLion (another IDE would work, but the things that need to be done are different).
 Under `Settings > Build, Execution, Deployment > CMake` add an environment variable called `VULKAN_SDK`.
-This will be the filepath to the SDK you downloaded earlier and should look something like `/Users/<your user>/VulkanSDK/<Vulkan version>/macOS/` on MacOS/iOS or `C:/Users/<your user>/VulkanSDK/<vulkan version>/` on Windows.
+This will be the filepath to the SDK you downloaded earlier and should look something like `/Users/<your user>/VulkanSDK/<Vulkan version>/macOS/` on MacOS/iOS or `C:/VulkanSDK/<vulkan version>/` on Windows.
 
 On a MacOS with Intel Silicon, Vulkan runs through a non-standard target.
 Because of this, Vulkan throws an non-fatal error before trying the correct target (after which, everything runs successfully).
